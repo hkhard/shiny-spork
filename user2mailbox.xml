@@ -1,0 +1,58 @@
+﻿<Objs Version="1.1.0.1" xmlns="http://schemas.microsoft.com/powershell/2004/04">
+  <Obj RefId="0">
+    <TN RefId="0">
+      <T>Deserialized.System.Collections.Hashtable</T>
+      <T>Deserialized.System.Object</T>
+    </TN>
+    <DCT>
+      <En>
+        <S N="Key">admmsa09</S>
+        <S N="Value">MDB12</S>
+      </En>
+      <En>
+        <S N="Key">x-kontract-stal</S>
+        <S N="Value">MDB18</S>
+      </En>
+      <En>
+        <S N="Key">ata03</S>
+        <S N="Value">MDB13</S>
+      </En>
+      <En>
+        <S N="Key">LRT03</S>
+        <S N="Value">MDB16</S>
+      </En>
+      <En>
+        <S N="Key">x-kontract-bjbo</S>
+        <S N="Value">MDB19</S>
+      </En>
+      <En>
+        <S N="Key">asg05</S>
+        <S N="Value">MDB13</S>
+      </En>
+      <En>
+        <S N="Key">snm03</S>
+        <S N="Value">MDB15</S>
+      </En>
+      <En>
+        <S N="Key">NTN05</S>
+        <S N="Value">MDB17</S>
+      </En>
+      <En>
+        <S N="Key">x-kontract-tini</S>
+        <S N="Value">MDB14</S>
+      </En>
+      <En>
+        <S N="Key">DVR03</S>
+        <S N="Value">MDB17</S>
+      </En>
+      <En>
+        <S N="Key">mha05</S>
+        <S N="Value">MDB17</S>
+      </En>
+      <En>
+        <S N="Key">x-kontract-haka</S>
+        <S N="Value">MDB11</S>
+      </En>
+    </DCT>
+  </Obj>
+</Objs>

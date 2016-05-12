@@ -1,0 +1,50 @@
+﻿<Objs Version="1.1.0.1" xmlns="http://schemas.microsoft.com/powershell/2004/04">
+  <Obj RefId="0">
+    <TN RefId="0">
+      <T>System.Collections.Hashtable</T>
+      <T>System.Object</T>
+    </TN>
+    <DCT>
+      <En>
+        <S N="Key">MDB11</S>
+        <Db N="Value">0.88</Db>
+      </En>
+      <En>
+        <S N="Key">MDB10</S>
+        <Db N="Value">0.75</Db>
+      </En>
+      <En>
+        <S N="Key">MDB18</S>
+        <Db N="Value">0.62</Db>
+      </En>
+      <En>
+        <S N="Key">MDB17</S>
+        <Db N="Value">0.62</Db>
+      </En>
+      <En>
+        <S N="Key">MDB12</S>
+        <Db N="Value">3.293</Db>
+      </En>
+      <En>
+        <S N="Key">MDB19</S>
+        <Db N="Value">0.62</Db>
+      </En>
+      <En>
+        <S N="Key">MDB14</S>
+        <Db N="Value">0.62</Db>
+      </En>
+      <En>
+        <S N="Key">MDB13</S>
+        <Db N="Value">0.62</Db>
+      </En>
+      <En>
+        <S N="Key">MDB16</S>
+        <Db N="Value">0.62</Db>
+      </En>
+      <En>
+        <S N="Key">MDB15</S>
+        <D N="Value">3</D>
+      </En>
+    </DCT>
+  </Obj>
+</Objs>
