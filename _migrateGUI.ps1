@@ -734,7 +734,7 @@ $processIngCount = $0
 if ($formerForest -eq "martinservera.se")
 { $targetAddressFilter = "%@martinservera.se" }
 
-$RowsToProcess = $userTable.Select("DOMAIN='DC=martinservera,DC=net' AND mailNickName is not null AND mail like '$targetAddressFilter'")
+$RowsToProcess = $userTable.Select("DOMAIN='DC=martinservera,DC=net' AND mailNickName is not null AND msExchHomeServerName like '%STHDCSRV18%' AND mail like '$targetAddressFilter'")
 
 LogLine "Phase 4 - Open selection dialog"
 
