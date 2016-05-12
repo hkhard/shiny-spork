@@ -74,7 +74,6 @@ Import-Module ActiveDirectory
 $scriptFileName = ($MyInvocation.MyCommand.Name).split(".")[0]
 $logFilePath = "\\sthdcsrvb174.martinservera.net\script$\_log\"
 openLogFile "$logFilePath$(($MyInvocation.MyCommand.name).split('.')[0])-$(get-date -uformat %D)-$env:USERNAME.log"
-#$MDBdataBaseFile = "\\sthdcsrvb174.martinservera.net\script$\migrateExchange\exchangedb.xml"
 $User2MDBdataBaseFile = "\\sthdcsrvb174.martinservera.net\script$\migrateExchange\user2mailbox.xml"
 $MDBSizeHTdataBaseFile = "\\sthdcsrvb174.martinservera.net\script$\migrateExchange\exchangedbsizes.xml"
 
