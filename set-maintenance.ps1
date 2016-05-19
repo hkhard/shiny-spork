@@ -26,6 +26,7 @@ Unblock-File \\sthdcsrvb174.martinservera.net\script$\_lib\ad.ps1 -Confirm:$fals
 Function set-Maintenance([ValidateNotNullOrEmpty()]
                             [string] $node)
 {
+    $return = $true
     If ($node.tolower() -like "sthdcsrvb153*") {$otherServer = "sthdcsrvb152"}
     Else {$otherServer = "sthdcsrvb152"}
     try {
@@ -33,19 +34,23 @@ Function set-Maintenance([ValidateNotNullOrEmpty()]
     }
     catch [System.Exception] {
         LogErrorLine $Error[0]
+        $return = $false
     }
     try {
         Set-MailboxServer $node -DatabaseCopyAutoActivationPolicy Blocked
     }
     catch [System.Exception] {
-        LogErrorLine $Error[0] 
+        LogErrorLine $Error[0]
+        $return = $false
     }
     try {
         Set-ServerComponentState $node -Component ServerWideOffline -State Inactive -Requester Maintenance
     }
     catch [System.Exception] {
-       LogErrorLine $Error[0]  
+       LogErrorLine $Error[0]
+       $return = $false  
     }
+    $return
 }
 
 Function verify-Maintenance([ValidateNotNullOrEmpty()]
@@ -73,7 +78,6 @@ Function stop-Maintenance([ValidateNotNullOrEmpty()]
     Try {Set-MailboxServer $node -DatabaseCopyAutoActivationPolicy Unrestricted} Catch {LogErrorLine $Error[0]}
 }                          
 
-
 # Main program
 # Set up logging
 $scriptFileName = ($MyInvocation.MyCommand.Name).split(".")[0]
@@ -83,10 +87,14 @@ openLogFile "$logFilePath$(($MyInvocation.MyCommand.name).split('.')[0])-$(get-d
 # Do work
 If (!($stopMaintenance))
 {
-    If ($confirm) {connect}
-    If ($confirm) {set-Maintenance -node $server} else {LogLine "Would have entered maintenance mode on Exchange node $($server)"}
-    If (($confirm) -and (verify-Maintenance -node $server)) {LogLine "Maintenance mode entered on Exhchange node $($server)"}
-    Else { If ($confirm) {LogErrorLine "Maintenance mode note entered for Exchange node $($Server)! Please Investigate" ; LogWarningLine $Error[0]}}
+    If ($confirm) {
+        connect
+        if (!(set-Maintenance -node $server))
+        {       
+            LogErrorLine "Could not enter maintenance mode on Exchange node $($server)"
+        }
+        If (verify-Maintenance -node $server) {LogLine "Maintenance mode entered on Exhchange node $($server)"}
+        Else { LogErrorLine "Maintenance mode note entered for Exchange node $($Server)! Please Investigate" ; LogWarningLine $Error[0]}
 }
 else {
     If ($confirm) {
