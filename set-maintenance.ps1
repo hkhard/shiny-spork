@@ -96,6 +96,7 @@ If (!($stopMaintenance))
         }
         If (verify-Maintenance -node $server) {LogLine "Maintenance mode entered on Exhchange node $($server)"}
         Else { LogErrorLine "Maintenance mode note entered for Exchange node $($Server)! Please Investigate" ; LogWarningLine $Error[0]}
+    }
 }
 else {
     If ($confirm) {
