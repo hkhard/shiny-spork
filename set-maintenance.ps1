@@ -1,5 +1,6 @@
-##########################################
+###########################################
 ### start exchange maintenance on one node
+### (c) 2016, Kontract IS AB // Hans K Hård
 ### Version History
 ### ===============
 ### 1.0 -- * Initial version
