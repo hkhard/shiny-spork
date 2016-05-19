@@ -1,4 +1,6 @@
 ﻿### Connect to Exchange 2016
+Function connect
+{
 If ((Get-PSSession | Where-Object {$_.ComputerName -like "sthdcsrvb*"}).count -lt 1)
  {
   Write-Host -ForegroundColor Green "... Please wait... will load Exchange 2016 PowerShell..."
@@ -6,3 +8,7 @@ If ((Get-PSSession | Where-Object {$_.ComputerName -like "sthdcsrvb*"}).count -l
   Write-Host -ForegroundColor Green "... Loading Exchange 2016 PowerShell for Martin & Servera AB ..."
   Import-PSSession $Session -AllowClobber
  }
+}
+
+### Main
+Connect
