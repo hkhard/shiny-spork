@@ -16,9 +16,10 @@ param(
    )
 
 # Include files and variable setup
+Unblock-File \\sthdcsrvb174.martinservera.net\script$\_lib\logFunctions.ps1 -Confirm:$false
+Unblock-File \\sthdcsrvb174.martinservera.net\script$\_lib\ad.ps1 -Confirm:$false
 . \\sthdcsrvb174.martinservera.net\script$\_lib\connect-exchange.ps1
 . \\sthdcsrvb174.martinservera.net\script$\_lib\logfunctions.ps1
-
 
 Function set-Maintenance([ValidateNotNullOrEmpty()]
                             [string] $node)
@@ -37,6 +38,12 @@ Function verify-Maintenance([ValidateNotNullOrEmpty()]
 }
 
 # Main program
+#Set up logging
+$scriptFileName = ($MyInvocation.MyCommand.Name).split(".")[0]
+$logFilePath = "\\sthdcsrvb174.martinservera.net\script$\_log\"
+openLogFile "$logFilePath$(($MyInvocation.MyCommand.name).split('.')[0])-$(get-date -uformat %D)-$env:USERNAME.log"
+
+#Do work
 connect
 If ($confirm) {set-Maintenance -node $server} else {LogLine "Would have entered maintenance mode on Exchange node $($server)"}
 If (($confirm) -and (verify-Maintenance -node $server)) {LogLine "Maintenance mode entered on Exhchange node $($server)"}
