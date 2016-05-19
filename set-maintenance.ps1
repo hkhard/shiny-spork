@@ -11,8 +11,8 @@
 param(
     [ValidateSet("sthdcsrvb152","sthdcsrvb153","sthdcsrvb152.martinservera.net","sthdcsrvb153.martinservera.net")]
     [ValidateNotNullOrEmpty()]
-    [Parameter(Mandatory = $true,Position = 0,valueFromPipeline=$true)] [string $server = "sthdcsrvb152",
-    [switch] $confirm = $false,
+    [Parameter(Mandatory = $true,Position = 0,valueFromPipeline=$true)] [string] $server = "",
+    [switch] $confirm = $false
    )
 
 # Include files and variable setup
@@ -21,24 +21,24 @@ param(
 
 
 Function set-Maintenance([ValidateNotNullOrEmpty()]
-                            [string $node])
+                            [string] $node)
 {
     If ($node.tolower() -like "sthdcsrvb153*") {$otherServer = "sthdcsrvb152"}
-    Else
-    {$otherServer = "sthdcsrvb152"} 
+    Else {$otherServer = "sthdcsrvb152"} 
     Get-MailboxDatabaseCopyStatus -Server $node | ? {$_.Status -eq "Mounted"} | % {Move-ActiveMailboxDatabase $_.DatabaseName -ActivateOnServer $otherServer -Confirm:$false}
     Set-MailboxServer $node -DatabaseCopyAutoActivationPolicy Blocked
     Set-ServerComponentState $node -Component ServerWideOffline -State Inactive -Requester Maintenance
 }
 
 Function verify-Maintenance([ValidateNotNullOrEmpty()]
-                            [string $node])
+                            [string] $node)
 {
     ( Get-ServerComponentState $node -Component ServerWideOffline | % {$_.State -eq "Inactive"})
 }
 
 # Main program
 connect
-set-Maintenance -node $server
-If (verify-Maintenance -node $server) {LogLine "Maintenance mode enterned on Exhchange node $($server)"}
-Else {LogErrorLine "Maintenance mode note entered for Exchange node $($Server)! Please Investigate" ; LogWarningLine $Error[0]}
+If ($confirm) {set-Maintenance -node $server} else {LogLine "Would have entered maintenance mode on Exchange node $($server)"}
+If (($confirm) -and (verify-Maintenance -node $server)) {LogLine "Maintenance mode entered on Exhchange node $($server)"}
+Else { If ($confirm) {LogErrorLine "Maintenance mode note entered for Exchange node $($Server)! Please Investigate" ; LogWarningLine $Error[0]}}
+
