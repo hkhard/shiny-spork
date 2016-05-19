@@ -100,8 +100,8 @@ else {
     If ($confirm) {
         connect
         $server = get-serverInMaintenanceMode
-        If (($confirm) -and ($server)) {stop-Maintenance -node $server}
-        If (($confirm) -and (!(verify-Maintenance -node $server))) {LogLine "Maintenance mode exited on Exhchange node $($server)"}
+        If ($server) {stop-Maintenance -node $server}
+        If (!(verify-Maintenance -node $server)) {LogLine "Maintenance mode exited on Exhchange node $($server)"}
     }
 }
 
