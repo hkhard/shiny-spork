@@ -622,7 +622,7 @@ function createAprovalForm($text)
 # MAIN program
 
 $scriptFileName = ($MyInvocation.MyCommand.Name).split(".")[0]
-# $logFileName = "\\sthdcsrvb174.martinservera.net\script$\_log\$scriptFileName-" + (get-date -uformat %D) + ".log"
+$logFilePath = "\\sthdcsrvb174.martinservera.net\script$\_log\"
 
 $pathToDomainControllerTable = "\\sthdcsrvb174.martinservera.net\script$\_lib\$scriptFileName-domainControllerTable.xml"
 $pathToUserDataBase = "\\sthdcsrvb174.martinservera.net\script$\_lib\$scriptFileName-userDataTable.xml"
