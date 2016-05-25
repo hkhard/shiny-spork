@@ -57,7 +57,8 @@ param(
    [switch] $confirm = $false,
    [switch] $autoComplete = $false,
    [string] $inputFile,
-   [switch] $NotifyME = $false
+   [switch] $NotifyME = $false,
+   [number] $BadItemLimit = 0
    )
 
 ####################
@@ -89,7 +90,7 @@ $mArray = @()               ## Array to hold what Migration endpoints are used b
 $mdbHT = @{}                ## Hashtable for mailboxdatabases and number of mailboxes
 $mdbSizeHT = @{}            ## Hashtable for mailboxdatabases and their sizes
 $Rnd = Get-Random -Minimum 10 -Maximum 99 ### Random number 10 to 99
-$BadItemLimit = 1
+# $BadItemLimit = 1
 $NumberofAllowedLargeItems = "Unlimited"
 $scpDenyGroupNAme = "secSCPDeny"
 $activesyncGroupName = "SEC-EAS-Users"
