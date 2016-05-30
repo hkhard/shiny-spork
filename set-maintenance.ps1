@@ -110,6 +110,13 @@ Function verify-Maintenance([ValidateNotNullOrEmpty()]
     ( Get-ServerComponentState $node -Component ServerWideOffline | % {$_.State -eq "Inactive"})
 }
 
+#####################################################################
+# Function get-serverInMaintenanceMode by Kontract (c)
+#  (Hans.Hard@kontract.se)
+#
+# Returns the last server currently in maintenance mode
+#
+#####################################################################
 Function get-serverInMaintenanceMode()
 {
     $return = $null
