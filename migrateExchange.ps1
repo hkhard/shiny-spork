@@ -58,7 +58,7 @@ param(
    [switch] $autoComplete = $false,
    [string] $inputFile,
    [switch] $NotifyME = $false,
-   [number] $BadItemLimit = 0
+   [Parameter(Mandatory = $false)] [int] $BadItemLimit = 0
    )
 
 ####################
