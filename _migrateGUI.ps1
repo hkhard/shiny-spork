@@ -796,6 +796,7 @@ if ($result -eq "OK")
   LogLine "Running migration for $($userNamesOfAccountsToBeMigrated.count)"
   # All usersnames are in the $user$userNamesOfAccountsToBeMigrated array
   # $migrationType = "autocomplete" or "incrementalsync"
+  If (!($maxCorrupt)) {$maxCorrupt = 0}
   If ($migrationType.ToLower() -eq "autocomplete") { $migrationTypeIncremental = $False ; $migrationTypeAutoComplete = $true }
   Else { $migrationTypeIncremental = $True ; $migrationTypeAutoComplete = $False }
   $userNamesOfAccountsToBeMigrated | & '\\sthdcsrvb174.martinservera.net\Script$\migrateExchange\migrateExchange.ps1' -autoComplete:$migrationTypeAutoComplete -confirm:$($ConfirmCheckbox.Checked) -BadItemLimit:$maxCorrupt
