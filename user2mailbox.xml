@@ -14,6 +14,10 @@
         <S N="Value">MDB17</S>
       </En>
       <En>
+        <S N="Key">res-hstl1-slapvagnen</S>
+        <S N="Value">MDB13</S>
+      </En>
+      <En>
         <S N="Key">med01</S>
         <S N="Value">MDB10</S>
       </En>
@@ -32,6 +36,10 @@
       <En>
         <S N="Key">x-kontract-jama</S>
         <S N="Value">MDB17</S>
+      </En>
+      <En>
+        <S N="Key">RON03</S>
+        <S N="Value">MDB10</S>
       </En>
       <En>
         <S N="Key">x-kontract-bjbo</S>
@@ -70,6 +78,10 @@
         <S N="Value">MDB17</S>
       </En>
       <En>
+        <S N="Key">ACN03</S>
+        <S N="Value">MDB10</S>
+      </En>
+      <En>
         <S N="Key">x-kontract-rime</S>
         <S N="Value">MDB14</S>
       </En>
@@ -84,6 +96,10 @@
       <En>
         <S N="Key">admmsa09</S>
         <S N="Value">MDB12</S>
+      </En>
+      <En>
+        <S N="Key">gemitservicedesk</S>
+        <S N="Value">MDB15</S>
       </En>
       <En>
         <S N="Key">snm03</S>
