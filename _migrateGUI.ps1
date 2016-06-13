@@ -1,7 +1,7 @@
 <#
     .SYNOPSIS
     #####################################################################
-    # Created by Kontract (c) 2012-2015, v1.10
+    # Created by Kontract (c) 2012-2016, v2.0
     #  (Stefan.Alkman@kontract.se)
     #  (Hans.Hard@kontract.se)
     #
@@ -9,7 +9,7 @@
 	THIS CODE IS MADE AVAILABLE AS IS, WITHOUT WARRANTY OF ANY KIND. THE ENTIRE 
 	RISK OF THE USE OR THE RESULTS FROM THE USE OF THIS CODE REMAINS WITH THE USER.
 	
-	Version 1.10, 12th August, 2015
+	Version 2.0, 13th August, 2016
 	
     .DESCRIPTION
     This script show a UI for selection of mailboxes to send into the
@@ -17,7 +17,7 @@
 
    	.PARAMETER FormerForest
 	Parameter to specify which forest to look for migratable mailboxes
-        Defaults to 'korsnas.se'
+        Defaults to 'martinservera.se'
 
     .PARAMETER FullSync
     Creates internal databases of objects and their USN's.
@@ -35,6 +35,7 @@
 ### 1.0 -- * Release version
 ### 1.1 -- * Added Send confirm checkbox to confirmation dialogue. Added command to actually send selected objects into the migration routine.
 ### 1.11 - * Cosmetic changes and adaption of command line to migrateExchange-script
+### 2.0 -- * Added textBox for maxCorruptItem
 ### ================
 ### End History info
 
@@ -76,6 +77,7 @@ $userValuesChanged = 0
 $verbose = 0
 $LastColumnClicked = 0 # tracks the last column number that was clicked
 $LastColumnAscending = $false # tracks the direction of the last sort of this column
+$maxCorrupt = 0 #Max number of corrupt items
 
 
 ##############################################################
@@ -555,6 +557,8 @@ function createAprovalForm($text)
  $script:OkButton = New-Object System.Windows.Forms.Button
  $script:CancelButton = New-Object System.Windows.Forms.Button
  $script:LineDevider =  New-Object System.Windows.Forms.Label
+ $script:numberOfCorruptItemsToSkip = New-Object System.Windows.Forms.TextBox
+ $script:TextLabel =  New-Object System.Windows.Forms.Label
 
  # Configure the form
  $Form.Text = "Please confirm"
@@ -574,7 +578,7 @@ function createAprovalForm($text)
  $OKButton.Size = New-Object System.Drawing.Size(75,23)
  $OKButton.Text = "Ok"
  $OKButton.Anchor = "Right, Bottom"
- $OKButton.Add_Click({$form.DialogResult = "Ok"; $Form.Close()})
+ $OKButton.Add_Click({$form.DialogResult = "Ok"; $Script:maxCorrupt=$numberOfCorruptItemsToSkip.Text; $Form.Close()})
  $Form.Controls.Add($OKButton)
 
  $x = $Form.ClientRectangle.Width-180
@@ -583,7 +587,7 @@ function createAprovalForm($text)
  $CancelButton.Size = New-Object System.Drawing.Size(75,23)
  $CancelButton.Text = "Cancel"
  $CancelButton.Anchor = "Right, Bottom"
- $CancelButton.Add_Click({$Form.Close()})
+ $CancelButton.Add_Click({$Form.Close(); $Script:maxCorrupt=$numberOfCorruptItemsToSkip.Text;})
  $Form.Controls.Add($CancelButton)
 
  $x = 5
@@ -596,6 +600,21 @@ function createAprovalForm($text)
  $LineDevider.Text = ""
  $LineDevider.BorderStyle = "Fixed3D"
  $Form.Controls.Add($LineDevider)
+
+ $x = $Form.ClientRectangle.Width-375
+ $y = $Form.ClientRectangle.Height-58
+ $textLabel.Anchor = "Left, Bottom"
+ $textLabel.Location = New-Object System.Drawing.Size($x, $y)
+ $textLabel.Size = New-Object System.Drawing.Size(100,23) 
+ $textLabel.Text = "Max corrupt items:"
+ $Form.Controls.Add($textLabel) 
+
+ $x = $Form.ClientRectangle.Width-275
+ $y = $Form.ClientRectangle.Height-60
+ $numberOfCorruptItemsToSkip.Anchor = "Left, Bottom"
+ $numberOfCorruptItemsToSkip.Location = New-Object System.Drawing.Size($x, $y) 
+ $numberOfCorruptItemsToSkip.Size = New-Object System.Drawing.Size(40,23)
+ $Form.Controls.Add($numberOfCorruptItemsToSkip) 
 
  $TextBox.Width = $Form.ClientRectangle.Width
  $TextBox.Height = $Form.ClientRectangle.Height-65
@@ -779,11 +798,12 @@ if ($result -eq "OK")
   # $migrationType = "autocomplete" or "incrementalsync"
   If ($migrationType.ToLower() -eq "autocomplete") { $migrationTypeIncremental = $False ; $migrationTypeAutoComplete = $true }
   Else { $migrationTypeIncremental = $True ; $migrationTypeAutoComplete = $False }
-  $userNamesOfAccountsToBeMigrated | & '\\sthdcsrvb174.martinservera.net\Script$\migrateExchange\migrateExchange.ps1' -autoComplete:$migrationTypeAutoComplete -confirm:$($ConfirmCheckbox.Checked)
+  $userNamesOfAccountsToBeMigrated | & '\\sthdcsrvb174.martinservera.net\Script$\migrateExchange\migrateExchange.ps1' -autoComplete:$migrationTypeAutoComplete -confirm:$($ConfirmCheckbox.Checked) -BadItemLimit:$maxCorrupt
  }
  else
  {
-  LogLine "Cancel selected on confirm dialogue, stopping..."
+     LogLine "$maxCorrupt max corrupt items..."
+     LogLine "Cancel selected on confirm dialogue, stopping..."
  }
 }
 else
