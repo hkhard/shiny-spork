@@ -198,6 +198,11 @@ Function getOldMailboxSize ( $valPair )
    LogLine " Trying to get mailbox statistics for: $($valPair.Key)"
    $UserMailboxStats = Get-Mailbox -identity $($valPair).Key | Get-MailboxStatistics
   }
+  "default"
+  {
+         LogLine " Trying to get mailbox statistics for: $($valPair.Key)"
+         $UserMailboxStats = Get-Mailbox -identity $($valPair).Key | Get-MailboxStatistics
+  }
  }
  $UserMailboxStats | Add-Member -MemberType ScriptProperty -Name TotalItemSizeInBytes -Value {$this.TotalItemSize -replace "(.*\()|,| [a-z]*\)", ""}
  $returnValue = $UserMailboxStats | Select-Object DisplayName, TotalItemSizeInBytes,@{Name="TotalItemSizeGB"; Expression={[math]::Round( (($_.TotalItemSizeInBytes/1GB)),2)}}
