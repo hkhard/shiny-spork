@@ -198,7 +198,7 @@ Function getOldMailboxSize ( $valPair )
    LogLine " Trying to get mailbox statistics for: $($valPair.Key)"
    $UserMailboxStats = Get-Mailbox -identity $($valPair).Key | Get-MailboxStatistics
   }
-  "default"
+  "ms-solutions"
   {
          LogLine " Trying to get mailbox statistics for: $($valPair.Key)"
          $UserMailboxStats = Get-Mailbox -identity $($valPair).Key | Get-MailboxStatistics
