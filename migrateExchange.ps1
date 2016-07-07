@@ -169,9 +169,10 @@ function checkUserMigrationStatus ( $strUser )
  If ($UserMailbox)
  {
   LogInfoLine " Processing: $uname"
-  $domainTemp = $($uldp.UserPrincipalName).split("@")[1]
-  $domainPart = $($domainTemp).split(".")[0]
-  try { $script:users2migrate.add($uname, $domainPart) } catch { }
+  #$domainTemp = $($uldp.UserPrincipalName).split("@")[1]
+  #$domainPart = $($domainTemp).split(".")[0]
+  ### Ugly hack for this environment only...!
+  try { $script:users2migrate.add($uname, 'martinservera') } catch { }
  }
  else { LogWarningLine " $strUser does not have a mailbox" ; LogErrorLine $error[0] ; $script:failArray += $strUser}
 }
