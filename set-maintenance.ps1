@@ -1,13 +1,13 @@
 <#
     .SYNOPSIS
     #####################################################################
-    # Created by Kontract 2012-2016, v1.1  (c)
+    # Created by Kontract 2012-2016, v2.1 (c)
     # (Hans.Hard@kontract.se)
     #####################################################################	
 	THIS CODE IS MADE AVAILABLE AS IS, WITHOUT WARRANTY OF ANY KIND. THE ENTIRE 
 	RISK OF THE USE OR THE RESULTS FROM THE USE OF THIS CODE REMAINS WITH THE USER.
 	
-	Version 1.1, 20th May, 2016
+	Version 2.1, 20th May, 2016
 	
     .DESCRIPTION
 	Move all active Exchange databases off from the provided server name and onto
@@ -34,6 +34,8 @@
 ### ===============
 ### 1.0 -- * Initial version
 ### 1.1 -- * With stop-Maintenance
+### 2.0 -- * Adjusted start-maintenance with new routines
+### 2.1 -- * Added updated stop-maintenance according to new start-routine
 ### ================
 ### End History info
 ####################
@@ -81,25 +83,16 @@ Function set-Maintenance([ValidateNotNullOrEmpty()]
     Else {$otherServer = "sthdcsrvb152"}
     $nodeFQDN = $node + "martinservera.net"
     $otherServerFQDN = $otherServer + "martinservera.net"
-
-#    if ($return) { try 
-#        {
-#        }
-#    catch [System.Exception] {
-#        LogErrorLine $Error[0]
-#        $return = $false
-#    }
-
     if ($return) { try
         {
             Set-ServerComponentState -server $node -Component HubTransport -State Draining -Requester Maintenance
-            Restart-Service MSExchangeTransport -server $node 
+            Restart-Service MSExchangeTransport -server $node -Confirm:$false
             Redirect-Message -Server $node -Target $otherServerFQDN -Requester Maintenance -Confirm:$false
         }
-    }
     catch [System.Exception] {
         LogErrorLine $Error[0]
         $return = $false
+    }
     }
     if ($return) { try 
         {
@@ -108,6 +101,7 @@ Function set-Maintenance([ValidateNotNullOrEmpty()]
     catch [System.Exception] {
         LogErrorLine $Error[0]
         $return = $false
+    }
     }
     if (($return) -and (((Get-DatabaseAvailabilityGroup -Identity DAG01 -Status).primaryActiveManager).tolower -eq $node )) { try 
         {
@@ -158,8 +152,9 @@ Function set-Maintenance([ValidateNotNullOrEmpty()]
         $return = $false  
         }
     }
-    $return
+    $return }
 }
+
 
 #####################################################################
 # Function verify-Maintenance by Kontract (c)
@@ -204,8 +199,19 @@ Function get-serverInMaintenanceMode()
 Function stop-Maintenance([ValidateNotNullOrEmpty()] 
                           [String] $node)
 {
-    Try {Set-ServerComponentState $node -Component ServerWideOffline -State Active -Requester Maintenance} Catch {LogErrorLine $Error[0]}
-    Try {Set-MailboxServer $node -DatabaseCopyAutoActivationPolicy Unrestricted} Catch {LogErrorLine $Error[0]}
+    $return = $true
+    If ($return){Try {Set-ServerComponentState $node -Component ServerWideOffline -State Active -Requester Maintenance} Catch {LogErrorLine $Error[0];$return=$false}}
+    If ($return){Try {Set-ServerComponentState $node -Component UMCallRouter -State Active -Requester Maintenance} Catch {LogErrorLine $Error[0];$return=$false}}
+    If ($return) {Try {Resume-ClusterNode $node -Confirm:$false} Catch {LogErrorLine $Error[0];$return=$false}}
+    If ($return){Try {Set-MailboxServer $node -DatabaseCopyAutoActivationPolicy Unrestricted} Catch {LogErrorLine $Error[0];$return=$false}}
+    If ($return){Try {
+        Set-ServerComponentState $node -Component HubTransport -State Active -Requester Maintenance -confirm:$false
+        Restart-Service MSExchangeTransport -server $node -Confirm:$false
+    }
+    Catch {LogErrorLine $Error[0];$return=$false}}
+    $report = Get-ServerComponentState $node | ft Component,State -AutoSize
+    LogLine " Status of exchange components on server $($node):"
+    LogLine $report
 }                          
 
 ############################
@@ -239,7 +245,14 @@ else {
         connect
         $server = get-serverInMaintenanceMode
         If ($server) {stop-Maintenance -node $server}
-        If (!(verify-Maintenance -node $server)) {LogLine "Maintenance mode exited on Exhchange node $($server)"}
+        If (!(verify-Maintenance -node $server)) {
+            LogLine "Maintenance mode exited on Exhchange node $($server)"
+            LogLine " "
+            LogLinewithColour -sLine "Now go to either Exchange server and in PowerShell, run the following:" -sColour Green
+            LogLine " "
+            LogLine " cd ´$exscripts" 
+            LogLine ".\RedistributeActiveDatabases.ps1 -BalanceDbsByActivationPreference -ShowFinalDatabaseDistribution -confirm:´$false"
+        }
     }
 }
 StartStopInfo -sAction "stop"
