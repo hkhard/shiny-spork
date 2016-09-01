@@ -6,44 +6,52 @@
     </TN>
     <DCT>
       <En>
-        <S N="Key">MDB11</S>
-        <Db N="Value">0.88</Db>
+        <S N="Key">MDB14</S>
+        <Db N="Value">363.88</Db>
       </En>
       <En>
-        <S N="Key">MDB10</S>
-        <Db N="Value">0.75</Db>
+        <S N="Key">MDB20</S>
+        <Db N="Value">371.12</Db>
       </En>
       <En>
-        <S N="Key">MDB18</S>
-        <Db N="Value">0.62</Db>
-      </En>
-      <En>
-        <S N="Key">MDB17</S>
-        <Db N="Value">0.62</Db>
-      </En>
-      <En>
-        <S N="Key">MDB12</S>
-        <Db N="Value">3.293</Db>
+        <S N="Key">MDB21</S>
+        <Db N="Value">353.25</Db>
       </En>
       <En>
         <S N="Key">MDB19</S>
-        <Db N="Value">0.62</Db>
+        <Db N="Value">291.68999999999988</Db>
       </En>
       <En>
-        <S N="Key">MDB14</S>
-        <Db N="Value">0.62</Db>
+        <S N="Key">MDB18</S>
+        <Db N="Value">387.25</Db>
+      </En>
+      <En>
+        <S N="Key">MDB17</S>
+        <Db N="Value">292.23999999999995</Db>
+      </En>
+      <En>
+        <S N="Key">MDB12</S>
+        <Db N="Value">331.75</Db>
+      </En>
+      <En>
+        <S N="Key">MDB11</S>
+        <Db N="Value">291.4</Db>
+      </En>
+      <En>
+        <S N="Key">MDB10</S>
+        <Db N="Value">289.69</Db>
       </En>
       <En>
         <S N="Key">MDB13</S>
-        <Db N="Value">0.62</Db>
+        <Db N="Value">294.49000000000007</Db>
       </En>
       <En>
         <S N="Key">MDB16</S>
-        <Db N="Value">0.62</Db>
+        <Db N="Value">290.2299999999999</Db>
       </En>
       <En>
         <S N="Key">MDB15</S>
-        <D N="Value">3</D>
+        <D N="Value">364</D>
       </En>
     </DCT>
   </Obj>

@@ -169,9 +169,10 @@ function checkUserMigrationStatus ( $strUser )
  If ($UserMailbox)
  {
   LogInfoLine " Processing: $uname"
-  $domainTemp = $($uldp.UserPrincipalName).split("@")[1]
-  $domainPart = $($domainTemp).split(".")[0]
-  try { $script:users2migrate.add($uname, $domainPart) } catch { }
+  #$domainTemp = $($uldp.UserPrincipalName).split("@")[1]
+  #$domainPart = $($domainTemp).split(".")[0]
+  ### Ugly hack for this environment only...!
+  try { $script:users2migrate.add($uname, 'martinservera') } catch { }
  }
  else { LogWarningLine " $strUser does not have a mailbox" ; LogErrorLine $error[0] ; $script:failArray += $strUser}
 }
@@ -198,6 +199,11 @@ Function getOldMailboxSize ( $valPair )
    LogLine " Trying to get mailbox statistics for: $($valPair.Key)"
    $UserMailboxStats = Get-Mailbox -identity $($valPair).Key | Get-MailboxStatistics
   }
+  "ms-solutions"
+  {
+         LogLine " Trying to get mailbox statistics for: $($valPair.Key)"
+         $UserMailboxStats = Get-Mailbox -identity $($valPair).Key | Get-MailboxStatistics
+  }
  }
  $UserMailboxStats | Add-Member -MemberType ScriptProperty -Name TotalItemSizeInBytes -Value {$this.TotalItemSize -replace "(.*\()|,| [a-z]*\)", ""}
  $returnValue = $UserMailboxStats | Select-Object DisplayName, TotalItemSizeInBytes,@{Name="TotalItemSizeGB"; Expression={[math]::Round( (($_.TotalItemSizeInBytes/1GB)),2)}}
@@ -215,18 +221,21 @@ Function findBestFitTargetMDB ( $userName )
 {
  ### First check if we have already processed this user...
  If (!( $Script:UserMBX2DBHash.Get_item($userName) -ge 0) )
- { 
+ {
+  ### Update the hashtable with mailbox size
   $temp = $Script:mdbsizeHT.Item(0).Value
   $newDBsize = $temp + $Script:cSize
-  $indexName = "" ; $indexName = $Script:mdbsizeHT.Item(0).Key
-  $Script:mdbSizeHT.Item(0).Value = $newDBsize  ### Update the hashtable with mailbox size
+  $indexName = "" 
+  $indexName = $Script:mdbsizeHT.Item(0).Key
+  $Script:mdbSizeHT.Item(0).Value = $newDBsize  
 
   ### Store the new user name to database mapping on the XML HashTable
-  $dbName="" ; $dbName = $script:mdbsizeHT.Get_Item(0).Name
+  $dbName=""
+  $dbName = $script:mdbsizeHT.Get_Item(0).Name
   $Script:UserMBX2DBHash.Add($userName, $dbName )
   $Script:mbx2dbUpdated = $true
   ### Return the database with lowest usage 
-  $dbName  ### Returns the database chosen
+  $dbName 
  }
  Else
  {
@@ -278,7 +287,11 @@ Function getMailboxDatabaseSizes
  $a = @($mdb | Select-Object Name, @{Name="SizeGB"; Expression={[math]::Round( (($_.Size/1GB)),2)}})
  foreach ($row in $a.GetEnumerator() )
  {
-  If ( "$($row.SizeGB)" -gt "$($mdbSizeHT.get_item( $($row.Name)))" ) { $mdbSizeHT.Set_item($row.Name, $row.SizeGB) ;  $mdbSizeHTUpdated = $true  }
+  If ( "$($row.SizeGB)" -gt "$($mdbSizeHT.get_item( $($row.Name)))" )
+    {
+     $mdbSizeHT.Set_item($row.Name, $row.SizeGB)
+     $mdbSizeHTUpdated = $true
+    }
  }
  $Script:mdbSizeHT = $Script:mdbSizeHT.GetEnumerator() | Sort-Object -property Value
 }
@@ -572,16 +585,14 @@ else
 
 
 #### Stop logging and script
-If (($confirm) -and ($mdbSizeHTUpdated))
+If ($confirm)
 {
-    {
-        $b=@{}
-        foreach ($a in $mdbSizeHT.GetEnumerator() )
-        { $b.add($a.Name, $a.Value) }
-    }
+    $b=@{}
+    foreach ($a in $mdbSizeHT.GetEnumerator() )
+    { $b.add($a.Name, $a.Value) }
     Export-Clixml -Path $MDBSizeHTdataBaseFile -Encoding UTF8 -inputobject $b
 }
-If ( ($confirm) -and ($mbx2dbUpdated))
+If ( ($confirm))
 {
     Export-Clixml -Path $User2MDBdataBaseFile -Encoding UTF8 -InputObject $UserMBX2DBHash
 }
