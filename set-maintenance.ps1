@@ -81,8 +81,8 @@ Function set-Maintenance([ValidateNotNullOrEmpty()]
     $return = $true
     If ($node.tolower() -like "sthdcsrvb153*") {$otherServer = "sthdcsrvb152"}
     Else {$otherServer = "sthdcsrvb152"}
-    $nodeFQDN = $node + "martinservera.net"
-    $otherServerFQDN = $otherServer + "martinservera.net"
+    $nodeFQDN = $node + ".martinservera.net"
+    $otherServerFQDN = $otherServer + ".martinservera.net"
     if ($return) { try
         {
             Set-ServerComponentState -server $node -Component HubTransport -State Draining -Requester Maintenance
