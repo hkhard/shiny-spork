@@ -6,108 +6,304 @@
     </TN>
     <DCT>
       <En>
-        <S N="Key">x-kontract-stal</S>
-        <S N="Value">MDB18</S>
-      </En>
-      <En>
-        <S N="Key">DVR03</S>
-        <S N="Value">MDB17</S>
-      </En>
-      <En>
-        <S N="Key">res-hstl1-slapvagnen</S>
-        <S N="Value">MDB13</S>
-      </En>
-      <En>
-        <S N="Key">med01</S>
-        <S N="Value">MDB10</S>
-      </En>
-      <En>
-        <S N="Key">ata03</S>
-        <S N="Value">MDB13</S>
-      </En>
-      <En>
-        <S N="Key">asg05</S>
-        <S N="Value">MDB13</S>
-      </En>
-      <En>
-        <S N="Key">mha05</S>
-        <S N="Value">MDB17</S>
-      </En>
-      <En>
-        <S N="Key">x-kontract-jama</S>
-        <S N="Value">MDB17</S>
-      </En>
-      <En>
-        <S N="Key">RON03</S>
-        <S N="Value">MDB10</S>
-      </En>
-      <En>
-        <S N="Key">x-kontract-bjbo</S>
-        <S N="Value">MDB19</S>
-      </En>
-      <En>
-        <S N="Key">AFT03</S>
-        <S N="Value">MDB14</S>
-      </En>
-      <En>
-        <S N="Key">mjn05</S>
-        <S N="Value">MDB14</S>
-      </En>
-      <En>
-        <S N="Key">idm03</S>
+        <S N="Key">vsh05</S>
         <S N="Value">MDB16</S>
       </En>
       <En>
-        <S N="Key">AMT03</S>
-        <S N="Value">MDB17</S>
+        <S N="Key">gemnrkl1transport</S>
+        <S N="Value">MDB13</S>
       </En>
       <En>
-        <S N="Key">x-kontract-bojo</S>
-        <S N="Value">MDB17</S>
+        <S N="Key">fvv04</S>
+        <S N="Value">MDB16</S>
       </En>
       <En>
-        <S N="Key">x-kontract-haka</S>
+        <S N="Key">ohk05</S>
+        <S N="Value">MDB16</S>
+      </En>
+      <En>
+        <S N="Key">GEMNRKL1dcnorrkoping</S>
+        <S N="Value">MDB16</S>
+      </En>
+      <En>
+        <S N="Key">GEMNRKL1Orderkontore</S>
         <S N="Value">MDB11</S>
       </En>
       <En>
-        <S N="Key">x-kontract-tini</S>
-        <S N="Value">MDB14</S>
+        <S N="Key">dfavd05</S>
+        <S N="Value">MDB16</S>
       </En>
       <En>
-        <S N="Key">x-kontract-toni</S>
-        <S N="Value">MDB17</S>
+        <S N="Key">vru05</S>
+        <S N="Value">MDB16</S>
       </En>
       <En>
-        <S N="Key">ACN03</S>
+        <S N="Key">gemjnks1jonkoping</S>
+        <S N="Value">MDB16</S>
+      </En>
+      <En>
+        <S N="Key">GEMHSTL1Fastighetmar</S>
+        <S N="Value">MDB16</S>
+      </En>
+      <En>
+        <S N="Key">lunchrummet04</S>
+        <S N="Value">MDB16</S>
+      </En>
+      <En>
+        <S N="Key">gemhstl1halmstad</S>
+        <S N="Value">MDB16</S>
+      </En>
+      <En>
+        <S N="Key">grn05</S>
+        <S N="Value">MDB16</S>
+      </En>
+      <En>
+        <S N="Key">gemitvideokonferens</S>
+        <S N="Value">MDB16</S>
+      </En>
+      <En>
+        <S N="Key">GEM nyhetsbrev</S>
+        <S N="Value">MDB16</S>
+      </En>
+      <En>
+        <S N="Key">GEMHSTL1psfvmartinse</S>
+        <S N="Value">MDB16</S>
+      </En>
+      <En>
+        <S N="Key">gemhstl1bk_arrival</S>
+        <S N="Value">MDB16</S>
+      </En>
+      <En>
+        <S N="Key">adf05</S>
+        <S N="Value">MDB16</S>
+      </En>
+      <En>
+        <S N="Key">vrm04</S>
+        <S N="Value">MDB19</S>
+      </En>
+      <En>
+        <S N="Key">isy01</S>
+        <S N="Value">MDB19</S>
+      </En>
+      <En>
+        <S N="Key">GEMHSTL1AktivitetVFm</S>
+        <S N="Value">MDB19</S>
+      </En>
+      <En>
+        <S N="Key">GEMHSTL1Franvaromart</S>
+        <S N="Value">MDB19</S>
+      </En>
+      <En>
+        <S N="Key">res-nrkl1-vitarummet</S>
+        <S N="Value">MDB20</S>
+      </En>
+      <En>
+        <S N="Key">vkl05</S>
+        <S N="Value">MDB19</S>
+      </En>
+      <En>
+        <S N="Key">tle05</S>
+        <S N="Value">MDB19</S>
+      </En>
+      <En>
+        <S N="Key">gkc01</S>
+        <S N="Value">MDB16</S>
+      </En>
+      <En>
+        <S N="Key">ktn05</S>
         <S N="Value">MDB10</S>
       </En>
       <En>
-        <S N="Key">x-kontract-rime</S>
-        <S N="Value">MDB14</S>
+        <S N="Key">VFV05</S>
+        <S N="Value">MDB13</S>
       </En>
       <En>
-        <S N="Key">x-kontract-migu</S>
-        <S N="Value">MDB17</S>
+        <S N="Key">IVFUtlastning</S>
+        <S N="Value">MDB13</S>
       </En>
       <En>
-        <S N="Key">NTN05</S>
-        <S N="Value">MDB17</S>
-      </En>
-      <En>
-        <S N="Key">admmsa09</S>
-        <S N="Value">MDB12</S>
-      </En>
-      <En>
-        <S N="Key">gemitservicedesk</S>
-        <S N="Value">MDB15</S>
-      </En>
-      <En>
-        <S N="Key">snm03</S>
-        <S N="Value">MDB15</S>
-      </En>
-      <En>
-        <S N="Key">LRT03</S>
+        <S N="Key">vso04</S>
         <S N="Value">MDB16</S>
+      </En>
+      <En>
+        <S N="Key">gempersonalcentret</S>
+        <S N="Value">MDB19</S>
+      </En>
+      <En>
+        <S N="Key">gemhelgjour</S>
+        <S N="Value">MDB17</S>
+      </En>
+      <En>
+        <S N="Key">Receptionen04</S>
+        <S N="Value">MDB17</S>
+      </En>
+      <En>
+        <S N="Key">gemumel1umea</S>
+        <S N="Value">MDB17</S>
+      </En>
+      <En>
+        <S N="Key">gemklmr1transport</S>
+        <S N="Value">MDB17</S>
+      </En>
+      <En>
+        <S N="Key">GEMUMEL1RUUMEaserver</S>
+        <S N="Value">MDB17</S>
+      </En>
+      <En>
+        <S N="Key">GEMGBGCGGoteborgmart</S>
+        <S N="Value">MDB17</S>
+      </En>
+      <En>
+        <S N="Key">GEMHSTL1Produktionsl</S>
+        <S N="Value">MDB17</S>
+      </En>
+      <En>
+        <S N="Key">gemhstl1ivfexport</S>
+        <S N="Value">MDB17</S>
+      </En>
+      <En>
+        <S N="Key">gemnrkl1ivf</S>
+        <S N="Value">MDB11</S>
+      </En>
+      <En>
+        <S N="Key">utn04</S>
+        <S N="Value">MDB19</S>
+      </En>
+      <En>
+        <S N="Key">kontroll04</S>
+        <S N="Value">MDB19</S>
+      </En>
+      <En>
+        <S N="Key">gemnrkl1norrkoping</S>
+        <S N="Value">MDB19</S>
+      </En>
+      <En>
+        <S N="Key">kvalite04</S>
+        <S N="Value">MDB11</S>
+      </En>
+      <En>
+        <S N="Key">eae05</S>
+        <S N="Value">MDB11</S>
+      </En>
+      <En>
+        <S N="Key">fog04</S>
+        <S N="Value">MDB19</S>
+      </En>
+      <En>
+        <S N="Key">fastighet04</S>
+        <S N="Value">MDB19</S>
+      </En>
+      <En>
+        <S N="Key">tlm05</S>
+        <S N="Value">MDB19</S>
+      </En>
+      <En>
+        <S N="Key">GEMGBGCG</S>
+        <S N="Value">MDB13</S>
+      </En>
+      <En>
+        <S N="Key">akc05</S>
+        <S N="Value">MDB13</S>
+      </En>
+      <En>
+        <S N="Key">vdf05</S>
+        <S N="Value">MDB17</S>
+      </En>
+      <En>
+        <S N="Key">gemgbgs1register</S>
+        <S N="Value">MDB19</S>
+      </En>
+      <En>
+        <S N="Key">gemjnkr1transport</S>
+        <S N="Value">MDB19</S>
+      </En>
+      <En>
+        <S N="Key">utn14</S>
+        <S N="Value">MDB16</S>
+      </En>
+      <En>
+        <S N="Key">GEMHSTL1ProduktDF</S>
+        <S N="Value">MDB16</S>
+      </En>
+      <En>
+        <S N="Key">ruh05</S>
+        <S N="Value">MDB11</S>
+      </En>
+      <En>
+        <S N="Key">GEMHSTL1psfgmartinse</S>
+        <S N="Value">MDB17</S>
+      </En>
+      <En>
+        <S N="Key">ivfdf05</S>
+        <S N="Value">MDB17</S>
+      </En>
+      <En>
+        <S N="Key">GEMHSTL1Lagerkontorm</S>
+        <S N="Value">MDB17</S>
+      </En>
+      <En>
+        <S N="Key">ivk05</S>
+        <S N="Value">MDB19</S>
+      </En>
+      <En>
+        <S N="Key">ank05</S>
+        <S N="Value">MDB19</S>
+      </En>
+      <En>
+        <S N="Key">GEMHSTL1Palladminmar</S>
+        <S N="Value">MDB17</S>
+      </En>
+      <En>
+        <S N="Key">gdf01</S>
+        <S N="Value">MDB11</S>
+      </En>
+      <En>
+        <S N="Key">GEMGBGCGwebordergote</S>
+        <S N="Value">MDB17</S>
+      </En>
+      <En>
+        <S N="Key">GEMNRKL1fredag</S>
+        <S N="Value">MDB17</S>
+      </En>
+      <En>
+        <S N="Key">svk05</S>
+        <S N="Value">MDB11</S>
+      </En>
+      <En>
+        <S N="Key">afg05</S>
+        <S N="Value">MDB11</S>
+      </En>
+      <En>
+        <S N="Key">GEMHSTL1hrlcmartinse</S>
+        <S N="Value">MDB13</S>
+      </En>
+      <En>
+        <S N="Key">gemgbgs1goteborg</S>
+        <S N="Value">MDB13</S>
+      </En>
+      <En>
+        <S N="Key">gemhstl1anmalan</S>
+        <S N="Value">MDB19</S>
+      </En>
+      <En>
+        <S N="Key">rms02</S>
+        <S N="Value">MDB21</S>
+      </En>
+      <En>
+        <S N="Key">tlg05</S>
+        <S N="Value">MDB13</S>
+      </En>
+      <En>
+        <S N="Key">GEMHSTL1Frysavdelnin</S>
+        <S N="Value">MDB17</S>
+      </En>
+      <En>
+        <S N="Key">mkn05</S>
+        <S N="Value">MDB17</S>
+      </En>
+      <En>
+        <S N="Key">gemserveraskolan</S>
+        <S N="Value">MDB17</S>
       </En>
     </DCT>
   </Obj>

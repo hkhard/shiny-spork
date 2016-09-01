@@ -55,6 +55,13 @@ Unblock-File \\sthdcsrvb174.martinservera.net\script$\_lib\ad.ps1 -Confirm:$fals
 . \\sthdcsrvb174.martinservera.net\script$\_lib\connect-exchange.ps1
 . \\sthdcsrvb174.martinservera.net\script$\_lib\logfunctions.ps1
 
+################
+# Set up logging
+################
+$scriptFileName = ($MyInvocation.MyCommand.Name).split(".")[0]
+$logFilePath = "\\sthdcsrvb174.martinservera.net\script$\_log\"
+openLogFile "$logFilePath$(($MyInvocation.MyCommand.name).split('.')[0])-$(get-date -uformat %D)-$env:USERNAME.log"
+
 ############################
 # Start function definitions
 ############################
@@ -72,26 +79,84 @@ Function set-Maintenance([ValidateNotNullOrEmpty()]
     $return = $true
     If ($node.tolower() -like "sthdcsrvb153*") {$otherServer = "sthdcsrvb152"}
     Else {$otherServer = "sthdcsrvb152"}
-    try {
-        Get-MailboxDatabaseCopyStatus -Server $node | ? {$_.Status -eq "Mounted"} | % {Move-ActiveMailboxDatabase $_.DatabaseName -ActivateOnServer $otherServer -Confirm:$false}
+    $nodeFQDN = $node + "martinservera.net"
+    $otherServerFQDN = $otherServer + "martinservera.net"
+
+#    if ($return) { try 
+#        {
+#        }
+#    catch [System.Exception] {
+#        LogErrorLine $Error[0]
+#        $return = $false
+#    }
+
+    if ($return) { try
+        {
+            Set-ServerComponentState -server $node -Component HubTransport -State Draining -Requester Maintenance
+            Restart-Service MSExchangeTransport -server $node 
+            Redirect-Message -Server $node -Target $otherServerFQDN -Requester Maintenance -Confirm:$false
+        }
     }
     catch [System.Exception] {
         LogErrorLine $Error[0]
         $return = $false
     }
-    try {
-        Set-MailboxServer $node -DatabaseCopyAutoActivationPolicy Blocked
+    if ($return) { try 
+        {
+            Set-ServerComponentState $node -Component UMCallRouter -State Draining -Requester Maintenance
+        }
+    catch [System.Exception] {
+        LogErrorLine $Error[0]
+        $return = $false
+    }
+    if (($return) -and (((Get-DatabaseAvailabilityGroup -Identity DAG01 -Status).primaryActiveManager).tolower -eq $node )) { try 
+        {
+            LogLine " Moving Cluster-group to $($otherServer).."
+             Move-ClusterGroup "Cluster Group" -Node $otherServer -Confirm:$false 
+             Suspend-ClusterNode -Node $node -Confirm:$false  
+             while (((Get-DatabaseAvailabilityGroup -Identity DAG01 -Status).primaryActiveManager).tolower -eq $node ) {
+                 write-host -ForegroundColor Red "." -NoNewline
+                 start-sleep 0.5
+             }
+             Write-Host " "
+             LogLineWithColour -sLine "Done!" -sColour "Green" 
     }
     catch [System.Exception] {
         LogErrorLine $Error[0]
         $return = $false
     }
-    try {
-        Set-ServerComponentState $node -Component ServerWideOffline -State Inactive -Requester Maintenance
+    if ($return) { try 
+        {
+            Get-MailboxDatabaseCopyStatus -Server $node | ? {$_.Status -eq "Mounted"} | % {Move-ActiveMailboxDatabase $_.DatabaseName -ActivateOnServer $otherServer -Confirm:$false}
+            while ( ((Get-MailboxDatabaseCopyStatus -Server $node  | ? {$_.Status -eq "Mounted"}).count) -gt 0 ) {
+                 write-host -ForegroundColor Red "." -NoNewline
+                 start-sleep 0.5
+             }
+             Write-Host " "
+             LogLineWithColour -sLine "Done!" -sColour "Green" 
+        }
+        catch [System.Exception] {
+            LogErrorLine $Error[0]
+            $return = $false
+        }
     }
-    catch [System.Exception] {
-       LogErrorLine $Error[0]
-       $return = $false  
+    if ($return) { try
+        {
+            Set-MailboxServer $node -DatabaseCopyAutoActivationPolicy Blocked
+        }
+        catch [System.Exception] {
+            LogErrorLine $Error[0]
+            $return = $false
+        }
+    }
+    if ($return) { try 
+        {
+            Set-ServerComponentState $node -Component ServerWideOffline -State Inactive -Requester Maintenance
+        }
+        catch [System.Exception] {
+           LogErrorLine $Error[0]
+        $return = $false  
+        }
     }
     $return
 }
@@ -146,10 +211,15 @@ Function stop-Maintenance([ValidateNotNullOrEmpty()]
 ############################
 # Start main program
 ############################
-# Set up logging
-$scriptFileName = ($MyInvocation.MyCommand.Name).split(".")[0]
-$logFilePath = "\\sthdcsrvb174.martinservera.net\script$\_log\"
-openLogFile "$logFilePath$(($MyInvocation.MyCommand.name).split('.')[0])-$(get-date -uformat %D)-$env:USERNAME.log"
+StartStopInfo -sAction "start"
+#Check that we are in elevated powershell environment
+If (-Not ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] "Administrator")) {
+ LogErrorLine "Script is not run with administrative user. Please, restart Powershell with elevated privileges... Quitting!"
+ Remove-PSSession *
+ LogLine "Script set-maintenance aborted!"
+ StartStopInfo -sAction "stop"
+ Break
+}
 
 # Do work
 If (!($stopMaintenance))
@@ -172,3 +242,4 @@ else {
         If (!(verify-Maintenance -node $server)) {LogLine "Maintenance mode exited on Exhchange node $($server)"}
     }
 }
+StartStopInfo -sAction "stop"
